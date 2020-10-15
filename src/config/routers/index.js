@@ -8,7 +8,6 @@ require('../db/db')();
 
 const Matches = require('../models/matches');
 
-
 router.get('/lastGame',async(req,res)=>{
 
     await Matches.find({},async(err,docs)=>{
@@ -41,9 +40,7 @@ router.get('/lastFiftyGame',async(req,res)=>{
 })
 
 router.get('/searchMatch/:id&:date',async(req,res)=>{
-    
-    console.log(req.params.id);
-    console.log(req.params.date);
+
     await Matches.find({id: req.params.id},async(err,docs)=>{
         if (err) {
             throw err;
@@ -53,22 +50,13 @@ router.get('/searchMatch/:id&:date',async(req,res)=>{
 
         }
     })
-    const prueba =new RegExp(`${req.params.date}`,'i');
-    console.log(prueba);
 
-    // const prueba = new Date(`${req.params.date}`);
-    // const searchDate = new Date(`${req.params.date}`);
-
-    console.log('prueba '+prueba);
-    console.log('2020-10-04T03:00:00Z');
-
-    await Matches.find({"kickoff.label":prueba},async(err,docs)=>{
+    await Matches.find({"kickoff.label": req.params.id},async(err,docs)=>{
         if (err) {
             throw err;
         }
         console.log(docs);
         if (docs.length !== 0) {
-            console.log(docs.length)
             return res.send(docs);
 
         }
@@ -76,5 +64,3 @@ router.get('/searchMatch/:id&:date',async(req,res)=>{
 })
 
 module.exports = router;
-
-//ISODate("2020-10-04T03:00:00Z")

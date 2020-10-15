@@ -40,14 +40,13 @@ async function fillDb(){
                 })
             }
         }
-        console.log(i);
     }
 
 }
 
 function db(){
 
-    // fillDb();
+    fillDb();
 
     cron.schedule('0 0 * * *',async()=>{
         await fillDb();
